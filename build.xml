@@ -1,0 +1,101 @@
+<!--
+Copyright 2017 Samuel Lee Toepke
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<project name="HelloWorld" basedir="." default="run">
+    
+	<property name="main-class"      value="ant_test.HelloWorld"/>
+	<property name="build.dir"       value="build"/>
+	<property name="dist.dir"        value="dist"/>
+	<property name="lib.dir"         value="lib"/>
+	<property name="log4j.conf"      value="log4j2.xml"/>
+    <property name="properties.file" value="config.properties"/>
+	<property name="test.file" value="test.txt"/>
+	<property name="resources.dir"   value="resources"/>
+	<property name="src.dir"         value="src"/>
+		
+	<path id="build.classpath">
+	    <fileset dir="${lib.dir}/">
+		    <include name="${lib.dir}/*.jar"/>
+	    </fileset>
+    </path>
+	
+	<path id="lib">
+        <fileset dir="${lib.dir}" includes="**/*.jar"/>
+    </path>
+	
+    <target name="clean" description="Clean directories.">
+        <delete dir="${build.dir}"/>
+		<delete dir="${dist.dir}"/>
+    </target>
+
+    <target name="compile" depends="clean" description="Compile all source code.">
+        <mkdir dir="${build.dir}"/>
+		<copy file="${resources.dir}/${log4j.conf}" todir="${build.dir}"/>
+		<copy file="${resources.dir}/${properties.file}" todir="${build.dir}"/>
+        <javac srcdir="${src.dir}" destdir="${build.dir}" classpathref="lib" debug="on" includeantruntime="false" />
+    </target>
+
+    <target name="dist" depends="compile" description="Create distribution .jar file.">
+		<mkdir dir="${dist.dir}"/>
+		
+        <copy todir="${build.dir}/${lib.dir}" flatten="true">
+            <path refid="build.classpath"/>
+        </copy>
+		
+        <manifestclasspath property="manifest.classpath" jarfile="${dist.dir}/${ant.project.name}.jar">
+            <classpath refid="build.classpath"/>
+        </manifestclasspath>
+		
+		<pathconvert property="mf.classpath" pathsep=" ">
+	        <path refid="build.classpath"/>
+			
+	        <mapper>
+		        <chainedmapper>
+			        <flattenmapper/>
+			        <globmapper from="*.jar" to="lib/*.jar"/>
+		        </chainedmapper>
+	        </mapper>
+        </pathconvert>
+
+		<jar destfile="${dist.dir}/${ant.project.name}.jar" basedir="${build.dir}" >
+            <zipgroupfileset dir="${lib.dir}" includes="*.jar" excludes=""/>
+
+            <manifest>
+                <attribute name="Main-Class" value="${main-class}"/>
+                <attribute name="Class-Path" value="${mf.classpath}"/>
+            </manifest>
+        </jar>
+    </target>
+	
+	<target name="doc" depends="dist" description="Create the Javadocs.">
+		<javadoc sourcepath="${src.dir}" 
+		         destdir="${build.dir}/doc" 
+				 classpathref="lib" 
+				 access="private" 
+				 packagenames="com.*" 
+				 version="true" 
+				 author="true" >
+			<fileset dir="${src.dir}">
+				<include name="**" />
+			</fileset>
+		</javadoc>	
+	</target>
+	
+	<target name="run" depends="doc" description="Run the resulting .jar file.">
+        <java jar="${dist.dir}/${ant.project.name}.jar" fork="true" />
+    </target>
+
+</project>
