@@ -13,7 +13,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
- 
+
 package ant_test;
 
 import java.io.BufferedReader;
@@ -32,58 +32,50 @@ import org.apache.logging.log4j.LogManager;
 * @version 1.0
 */
 public class HelloWorld {
-	
-	private final static Logger logger = LogManager.getLogger(HelloWorld.class);
+
+    private final static Logger logger = LogManager.getLogger(HelloWorld.class);
 
    /**
     * Main method.
 	* @param args String array that holds input arguments. Not used in this case.
 	*/
     public static void main(String[] args) {
-		String method = "Botometer Test Harness: ";
-		logger.info(method + "STARTING.");
-		
-		// 0. Load Configuration File.
-		logger.info(method + "0. Load Configuration File.");
-	    
-	    InputStream in    = ClassLoader.getSystemClassLoader().getResourceAsStream("config.properties");
-		Properties  prop  = new Properties();
-		
-		try {
-		    prop.load(in);
-		} catch (Exception e) {
-			logger.error(e.toString());
-			System.exit(1);
-		}
-	
-		// 1. Instantiate Botometer4J
-		logger.info(method + "1. Instantiate Botometer4J Object.");
-		Botometer4J botometer = new Botometer4J(prop.getProperty("mashape_key"), prop.getProperty("consumer_key"), prop.getProperty("consumer_secret"), prop.getProperty("access_token"), prop.getProperty("access_token_secret"));
-		
-		// 2. Get Botometer Response
-		logger.info(method + "2. Execute Botometer4J Query/Requests.");
-		
-		String screen_name = "stevemartintogo";
-		//String screen_name = "rilokiley"; 
-		//String screen_name = "popville";
-		//String screen_name = "ieeespectrum";
-		//String screen_name = "nsfvoyager2";
-				
-		String botometer_response = botometer.getBotometerResponseForScreenName(screen_name);
-		logger.info(method + "....Querying Twitter Username: " + screen_name);
-		logger.info(method + "....Result: " + botometer_response);
-		
-		logger.info(method + "ENDING.");
+        String method = "Botometer Test Harness: ";
+        logger.info(method + "STARTING.");
+
+        // 0. Load Configuration File.
+	logger.info(method + "0. Load Configuration File.");
+
+        InputStream in    = ClassLoader.getSystemClassLoader().getResourceAsStream("config.properties");
+        Properties  prop  = new Properties();
+
+        try {
+            prop.load(in);
+        } catch (Exception e) {
+            logger.error(e.toString());
+        System.exit(1);
+        }
+
+        // 1. Instantiate Botometer4J
+        logger.info(method + "1. Instantiate Botometer4J Object.");
+        Botometer4J botometer = new Botometer4J(prop.getProperty("mashape_key"), prop.getProperty("consumer_key"), prop.getProperty("consumer_secret"), prop.getProperty("access_token"), prop.getProperty("access_token_secret"));
+
+        // 2. Get Botometer Response
+        logger.info(method + "2. Execute Botometer4J Query/Requests.");
+
+        String screen_name = "stevemartintogo";
+        //String screen_name = "rilokiley"; 
+        //String screen_name = "popville";
+        //String screen_name = "ieeespectrum";
+        //String screen_name = "nsfvoyager2";
+
+        String botometer_response = botometer.getBotometerResponseForScreenName(screen_name);
+        logger.info(method + "....Querying Twitter Username: " + screen_name);
+        logger.info(method + "....Result: " + botometer_response);
+
+        logger.info(method + "ENDING.");
     }
 }
-
-
-
-
-
-
-
-
 
 
 
