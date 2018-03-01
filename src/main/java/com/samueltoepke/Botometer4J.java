@@ -23,8 +23,8 @@ import java.util.List;
 import java.util.TimeZone;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -46,7 +46,7 @@ import twitter4j.conf.ConfigurationBuilder;
 */
 public class Botometer4J {
 
-    private final static Logger logger = LogManager.getLogger(Botometer4J.class);
+    private final static Logger logger = LoggerFactory.getLogger(Botometer4J.class);
 
     private String mashape_key = "";
     private String consumer_key = "";
@@ -174,7 +174,7 @@ public class Botometer4J {
 
             // 2. Get Mentions Information
             // https://stackoverflow.com/questions/18800610/how-to-retrieve-more-than-100-results-using-twitter4j
-            List<Status> mentions = new ArrayList();
+            List<Status> mentions = new ArrayList<>();
 
             Query query = new Query("@" + screen_name);
             query.setCount(100); // 100 Mentions per: https://market.mashape.com/OSoMe/botometer/overview

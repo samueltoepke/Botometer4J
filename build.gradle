@@ -8,7 +8,9 @@ repositories {
 
 dependencies {
   compile 'org.slf4j:slf4j-api:1.7.24'
+  compile "org.slf4j:slf4j-log4j12:1.7.24"
   compile "log4j:log4j:1.2.17"
+  
   compile 'com.google.code.gson:gson:2.8.2'
   compile 'com.mashape.unirest:unirest-java:1.4.9'
   compile 'org.apache.logging.log4j:log4j-core:2.10.0'

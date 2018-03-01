@@ -19,8 +19,8 @@ package com.samueltoepke;
 import java.io.InputStream;
 import java.util.Properties;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
 * HelloWorld class. To show workingness of Botometer Java library.
@@ -29,7 +29,7 @@ import org.apache.logging.log4j.Logger;
 */
 public class HelloWorld {
 
-    private final static Logger logger = LogManager.getLogger(HelloWorld.class);
+    private final static Logger logger = LoggerFactory.getLogger(HelloWorld.class);
 
    /**
     * Main method.
