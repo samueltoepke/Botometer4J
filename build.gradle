@@ -1,0 +1,19 @@
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'application'
+
+repositories {
+  jcenter()
+}
+
+dependencies {
+  compile 'org.slf4j:slf4j-api:1.7.24'
+  compile "log4j:log4j:1.2.17"
+  compile 'com.google.code.gson:gson:2.8.2'
+  compile 'com.mashape.unirest:unirest-java:1.4.9'
+  compile 'org.apache.logging.log4j:log4j-core:2.10.0'
+  compile 'org.twitter4j:twitter4j-core:4.0.4'
+  compile 'org.apache.commons:commons-lang3:3.7'
+}
+
+mainClassName = "com.samueltoepke.HelloWorld"
