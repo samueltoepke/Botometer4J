@@ -26,3 +26,4 @@ for Twitter/Mashape.
 ## EXECUTION:
  * All possible targets are in the ./build.xml file.
  * From a command line type "$ ant" to fully build/deploy/execute the code.
+ * If using Gradle, from a command line type "$ gradle tasks" to view pertinent targets e.g. 'clean', 'jar', and 'run'. 
